@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace ilo_Enkote_epiku
 {
@@ -415,12 +417,25 @@ namespace ilo_Enkote_epiku
             bytes.Add(105);
             bytes.Add(version);
             bytes.Add(0);
-
             foreach (string word in words)
             {
                 if (String.IsNullOrWhiteSpace(word))
                     continue;
-                bytes.Add(wordDict[word]);
+                if (Char.IsUpper(word[0]))
+                {
+                    bytes.Add(0);
+                    bytes.Add(3);
+                    bytes.Add(6);
+                    for (int i = 0; i < word.Length; i++)
+                    {
+                        bytes.Add(puncDict[word.ToUpper()[i]]);
+                    }
+                    bytes.Add(4);
+                } else
+                {
+                    bytes.Add(wordDict[word]);
+
+                }
             }
 
             File.WriteAllBytes(filePath.Replace(".txt",".toki"), bytes.ToArray());
