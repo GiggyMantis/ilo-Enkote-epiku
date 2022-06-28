@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace ilo_Enkote_epiku
 {
@@ -10,8 +12,7 @@ namespace ilo_Enkote_epiku
         public static string filePath;
         public static string lines;
         public static byte version = 0;
-        public static readonly char[] delimiters = {' ', '\n', '\t' };
-        public static readonly string[] words =
+        public static readonly string[] wordList =
         {
             "punc",
             "a",
@@ -144,7 +145,6 @@ namespace ilo_Enkote_epiku
             "epiku",
             "jasima",
             "kijetesantakalu",
-            "kin",
             "kipisi",
             "kokosila",
             "ku",
@@ -250,14 +250,14 @@ namespace ilo_Enkote_epiku
         };
         public static readonly char[] punctuation =
         {
-            //Null literal (only if error occurs):
-            '\0',
+            //Null
+            'ÿ',
             //Null ASCII
             '\0',
             '.',
             Char.ConvertFromUtf32(9230)[0],
             Char.ConvertFromUtf32(9231)[0],
-            '�',
+            '…',
             ' ',
             '\n',
             '\t',
@@ -291,14 +291,13 @@ namespace ilo_Enkote_epiku
             '/',
             '?',
             '|',
+            '\\',
+            '£',
+            '€',
+            '¥',
+            '₩',
             'A',
-            'B',
-            'C',
-            'D',
             'E',
-            'F',
-            'G',
-            'H',
             'I',
             'J',
             'K',
@@ -307,55 +306,107 @@ namespace ilo_Enkote_epiku
             'N',
             'O',
             'P',
-            'Q',
-            'R',
             'S',
             'T',
             'U',
-            'V',
-            'W',
-            'X',
-            'Y',
-            'Z'
+            'W'
         };
+        public static Dictionary<string, byte> wordDict;
+        public static Dictionary<byte, string> dictWord;
+        public static Dictionary<char, byte> puncDict;
+        public static Dictionary<byte, char> dictPunc;
 
         public static void Main(string[] args)
         {
+            DictionarySetUp();
+                    
             Console.WriteLine("kama pona e ilo Enkote epiku!");
             Console.WriteLine("lon ilo tenpo: " + version.ToString());
-            Encode(args);
-        }
-
-        public static void Encode(string[] args)
-        {
             if (args.Length == 0)
             {
-                while (filePath == null)
-                {
-                    Console.WriteLine("Enter filepath:");
-                    filePath = Console.ReadLine();
-                    try
-                    {
-                        lines = System.IO.File.ReadAllText(filePath);
-                    }
-                    catch (System.IO.FileNotFoundException)
-                    { }
-                }
-
+                Console.WriteLine("o toki e lon lipu:");
+                filePath = Console.ReadLine();
             }
             else
             {
                 filePath = args[0];
-                try
-                {
-                    lines = System.IO.File.ReadAllText(filePath);
-                }
-                catch (System.IO.FileNotFoundException e)
-                {
-                    Console.WriteLine("You must supply a filepath as the first argument.");
-                    throw e;
-                }
             }
+
+            if (filePath.EndsWith(".txt"))
+            {
+                Encode();
+            } else if (filePath.EndsWith(".toki"))
+            {
+                Decode();
+            } else
+            {
+                throw new FileNotFoundException(filePath + " li ala .toki anu .txt");
+            }
+        }
+
+        public static void Encode()
+        {
+            try
+            {
+                lines = System.IO.File.ReadAllText(filePath);
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                Console.WriteLine("o pana e namako nanpa wan pi lon lipu.");
+                throw e;
+            }
+
+
+            lines = lines.Replace("...", "…");
+            lines = lines.Replace('‘','\'');
+            lines = lines.Replace('’', '\'');
+            lines = lines.Replace('“', '\"');
+            lines = lines.Replace('”', '\"');
+            lines = lines.Replace('￥', '¥');
+
+            lines = lines.Replace(".", " punc akesi ");
+            lines = lines.Replace("…", " punc ale ");
+            lines = lines.Replace("  ", " punc anpa ");
+            lines = lines.Replace(Environment.NewLine, " punc ante ");
+            lines = lines.Replace("\t", " punc anu ");
+            lines = lines.Replace(",", " punc awen ");
+            lines = lines.Replace("<", " punc e ");
+            lines = lines.Replace(">", " punc en ");
+            lines = lines.Replace("`", " punc esun ");
+            lines = lines.Replace("~", " punc ijo ");
+            lines = lines.Replace("!", " punc ike ");
+            lines = lines.Replace("@", " punc ilo ");
+            lines = lines.Replace("#", " punc insa ");
+            lines = lines.Replace("$", " punc jaki ");
+            lines = lines.Replace("%", " punc jan ");
+            lines = lines.Replace("^", " punc jelo ");
+            lines = lines.Replace("&", " punc jo ");
+            lines = lines.Replace("*", " punc kala ");
+            lines = lines.Replace("(", " punc kalama ");
+            lines = lines.Replace(")", " punc kama ");
+            lines = lines.Replace("-", " punc kasi ");
+            lines = lines.Replace("=", " punc ken ");
+            lines = lines.Replace("_", " punc kepeken ");
+            lines = lines.Replace("+", " punc kili ");
+            lines = lines.Replace(":", " punc kin ");
+            lines = lines.Replace(";", " punc kiwen ");
+            lines = lines.Replace("\'", " punc ko ");
+            lines = lines.Replace("\"", " punc kon ");
+            lines = lines.Replace("[", " punc kule ");
+            lines = lines.Replace("]", " punc kulupu ");
+            lines = lines.Replace("{", " punc kute ");
+            lines = lines.Replace("}", " punc la ");
+            lines = lines.Replace("/", " punc lape ");
+            lines = lines.Replace("?", " punc laso ");
+            lines = lines.Replace("|", " punc lawa ");
+            lines = lines.Replace("\\", " punc len ");
+            lines = lines.Replace("£", " punc lete ");
+            lines = lines.Replace("€", " punc li ");
+            lines = lines.Replace("¥", " punc lili ");
+            lines = lines.Replace("₩", " punc linja ");
+
+            string[] words = lines.Split(" ");
+
 
             List<byte> bytes = new List<byte>();
             bytes.Add(116);
@@ -364,8 +415,103 @@ namespace ilo_Enkote_epiku
             bytes.Add(105);
             bytes.Add(version);
             bytes.Add(0);
+
+            foreach (string word in words)
+            {
+                if (String.IsNullOrWhiteSpace(word))
+                    continue;
+                bytes.Add(wordDict[word]);
+            }
+
+            File.WriteAllBytes(filePath.Replace(".txt",".toki"), bytes.ToArray());
+
         }
 
+        public static void DictionarySetUp()
+        {
+            wordDict = wordList.ToDictionary(item => item, item => (byte)Array.IndexOf(wordList, item));
+            dictWord = wordList.ToDictionary(item => (byte)Array.IndexOf(wordList, item), item => item);
+            puncDict = punctuation.ToDictionary(item => item, item => (byte)Array.IndexOf(punctuation, item));
+            dictPunc = punctuation.ToDictionary(item => (byte)Array.IndexOf(punctuation, item), item => item);
+        }
+
+        public static void Decode()
+        {
+            byte[] bytes;
+            try
+            {
+                bytes = System.IO.File.ReadAllBytes(filePath);
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                Console.WriteLine("o pana e namako nanpa wan pi lon lipu.");
+                throw e;
+            }
+
+            if (bytes[0] == 116 && bytes[1] == 111 && bytes[2] == 107 && bytes[3] == 105)
+            {
+                if (bytes[4] > version)
+                {
+                    Console.WriteLine("lon tenpo ilo li sama ala e lon tenpo lipu");
+                    Console.WriteLine("awen? (lon/ala)");
+                    if (Console.ReadLine() == "ala")
+                        throw new Exception("sina li awen ala.");
+                }
+
+                bool shiftHeld = false;
+                bool shifted = false;
+                int i = 7;
+                lines = "";
+                foreach (byte item in bytes)
+                {
+                    i--;
+                    if (i > 0)
+                        continue;
+                    if (shifted || shiftHeld)
+                    {
+                        shifted = false;
+                        if (item == 3)
+                        {
+                            shiftHeld = true;
+                            continue;
+                        } else if (item == 4)
+                        {
+                            shiftHeld = false;
+                            continue;
+                        } else
+                        {
+                            lines += dictPunc[item];
+
+                        }
+
+                    } else
+                    {
+                        if (item == 0)
+                        {
+                            shifted = true;
+                            continue;
+                        } else 
+                        {
+                            if (!(lines.EndsWith('\n') || lines.EndsWith('"')) && i != 0)
+                            {
+                                lines += " ";
+                            }
+
+                            lines += dictWord[item];
+                        }
+                    }
+
+
+                }
+
+
+                File.WriteAllText(filePath.Replace(".toki", ".txt"), lines);
+            } else
+            {
+                throw new FileNotFoundException(filePath + " li ala .toki");
+            }
+
+        }
 
     }
 }
