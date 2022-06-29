@@ -421,7 +421,7 @@ namespace ilo_Enkote_epiku
             lines = lines.Replace("¥", " punc lili ");
             lines = lines.Replace("₩", " punc linja ");
 
-            string[] words = lines.Split(" ");
+            string[] words = lines.Split(' ');
 
 
             List<byte> bytes = new List<byte>();
@@ -528,7 +528,7 @@ namespace ilo_Enkote_epiku
                             continue;
                         } else 
                         {
-                            if (!(lines.EndsWith('\n') || lines.EndsWith('"')) && i != 0)
+                            if (!(lines.EndsWith("\n") || lines.EndsWith("\"")) && i != 0)
                             {
                                 lines += " ";
                             }
