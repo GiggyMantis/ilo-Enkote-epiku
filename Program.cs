@@ -13,7 +13,7 @@ namespace ilo_Enkote_epiku
     {
         public static string filePath;
         public static string lines;
-        public static byte version = 0;
+        public static byte version = 1;
         public static readonly string[] wordList =
         {
             "punc",
@@ -49,7 +49,6 @@ namespace ilo_Enkote_epiku
             "ko",
             "kon",
             "kule",
-            //REPLACE kulu >> kulupu
             "kulupu",
             "kute",
             "la",
@@ -65,7 +64,6 @@ namespace ilo_Enkote_epiku
             "loje",
             "lon",
             "luka",
-            //REPLACE oko & lokon with lukin
             "lukin",
             "lupa",
             "ma",
@@ -88,11 +86,9 @@ namespace ilo_Enkote_epiku
             "nena",
             "ni",
             "nimi",
-            //REPLAECE jalin >> noka
             "noka",
             "o",
             "olin",
-            //REPLACE: i & iki & ipi with ona
             "ona",
             "open",
             "pakala",
@@ -130,7 +126,6 @@ namespace ilo_Enkote_epiku
             "taso",
             "tawa",
             "telo",
-            //REPLACE ten with tenpo
             "tenpo",
             "toki",
             "tomo",
@@ -224,7 +219,6 @@ namespace ilo_Enkote_epiku
             "mijomi",
             "molusa",
             "munsi",
-            //REPLACe aka & eki with natu
             "natu",
             "nele",
             "nja",
@@ -248,7 +242,10 @@ namespace ilo_Enkote_epiku
             "tokana",
             "wawajete",
             "wekama",
-            "wi"
+            "wi",
+            "te",
+            "to",
+            "oko"
         };
         public static readonly char[] punctuation =
         {
