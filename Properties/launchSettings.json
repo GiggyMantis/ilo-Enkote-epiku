@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ilo_Enkote_epiku": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\gordo\\Downloads\\ike.toki"
+      "commandName": "Project"
     }
   }
 }

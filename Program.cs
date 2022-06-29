@@ -311,7 +311,20 @@ namespace ilo_Enkote_epiku
             'S',
             'T',
             'U',
-            'W'
+            'W',
+            'a',
+            'e',
+            'i',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'p',
+            's',
+            't',
+            'u',
+            'w'
         };
         public static Dictionary<string, byte> wordDict;
         public static Dictionary<byte, string> dictWord;
@@ -370,6 +383,7 @@ namespace ilo_Enkote_epiku
             lines = lines.Replace("…", " punc ale ");
             lines = lines.Replace("  ", " punc anpa ");
             lines = lines.Replace(Environment.NewLine, " punc ante ");
+            lines = lines.Replace("\n", " punc ante ");
             lines = lines.Replace("\t", " punc anu ");
             lines = lines.Replace(",", " punc awen ");
             lines = lines.Replace("<", " punc e ");
@@ -428,7 +442,14 @@ namespace ilo_Enkote_epiku
                     bytes.Add(6);
                     for (int i = 0; i < word.Length; i++)
                     {
-                        bytes.Add(puncDict[word.ToUpper()[i]]);
+                        if (i == 0)
+                        {
+                            bytes.Add(puncDict[word.ToUpper()[i]]);
+                        } else
+                        {
+                            bytes.Add(puncDict[word.ToLower()[i]]);
+                        }
+
                     }
                     bytes.Add(4);
                 } else
