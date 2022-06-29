@@ -176,19 +176,16 @@ namespace ilo_Enkote_epiku
             "pake",
             "pata",
             "peto",
-            //REPLACEMENT neja >> po
             "po",
             "polinpin",
             "pomotolo",
             "powe",
             "samu",
-            //REPLACEMENT tuli >> san
             "san",
             "soto",
             "sutopatikuna",
             "taki",
             "teje",
-            //REPLACEMENT te & to >> "
             "umesu",
             "unu",
             "usawi",
