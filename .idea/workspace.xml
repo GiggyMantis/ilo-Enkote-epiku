@@ -7,10 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="828a20df-e020-4469-a435-96d4122be7e4" name="Changes" comment="Began rebuild in Rust">
+    <list default="true" id="828a20df-e020-4469-a435-96d4122be7e4" name="Changes" comment="Implemented working file I/O">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/debug.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/debug.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,12 +39,16 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2i4OGPPFOUHYlkFCRx8KKuum4AR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Cargo.Run ilo-Enkote-epiku.executor": "Run",
     "Cargo.Run.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -120,7 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1718746286552</updated>
       <workItem from="1718746288301" duration="6162000" />
-      <workItem from="1718982922185" duration="3955000" />
+      <workItem from="1718982922185" duration="6789000" />
     </task>
     <task id="LOCAL-00001" summary="Began rebuild in Rust">
       <option name="closed" value="true" />
@@ -130,15 +133,25 @@
       <option name="project" value="LOCAL" />
       <updated>1718802275383</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implemented working file I/O">
+      <option name="closed" value="true" />
+      <created>1718987727821</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1718987727821</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Began rebuild in Rust" />
-    <option name="LAST_COMMIT_MESSAGE" value="Began rebuild in Rust" />
+    <MESSAGE value="Implemented working file I/O" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented working file I/O" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

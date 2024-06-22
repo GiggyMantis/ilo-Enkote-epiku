@@ -1,3 +1,5 @@
+mod tree;
+
 use std::{env, io};
 use std::fs;
 use std::fs::File;
@@ -5,28 +7,20 @@ use std::io::{Read, Write};
 use std::path::PathBuf;
 use bitvec::prelude::*;
 
-const STRING_MODE_ARG: &str = "-string";
-const DEFAULT_TEXT: &str = "toki pona";
-
 fn main() {
     let mut args: Vec<String> = env::args().collect();
 
     args.remove(0);
 
-    if args.contains(&String::from(STRING_MODE_ARG)) {
-        args.remove(args.iter().position(|r| r == &STRING_MODE_ARG).unwrap());
-        let text = args.join("");
-
-
-    } else if args.len() > 0 {
+    if args.len() > 0 {
         let mut path = PathBuf::from(args.join(""));
         let mut new_path = PathBuf::new();
         let extension = path.extension()
-            .expect("File unable to be read. Did you mean to include '-string'?");
+            .expect("File unable to be read.");
         if extension == "txt" {
             new_path = path.with_extension("toki");
             let text = fs::read_to_string(path)
-                .expect("File unable to be read. Did you mean to include '-string'?");
+                .expect("File unable to be read.");
 
             let vec = txt_to_toki(&text);
 
@@ -38,7 +32,7 @@ fn main() {
         } else if extension == "toki" {
             new_path = path.with_extension("txt");
             let vec = file_to_bits(File::open(path)
-                .expect("File unable to be read. Did you mean to include '-string'?"));
+                .expect("File unable to be read."));
 
             let text = toki_to_txt(vec);
 
@@ -47,7 +41,7 @@ fn main() {
                 .write_all(text.as_bytes())
                     .expect("New file unable to be written to.")
         } else {
-            panic!("File unable to be read.\nFile must end in .toki or .txt\nDid you mean to include '-string'?")
+            panic!("File unable to be read.\nFile must end in .toki or .txt")
         }
 
 
@@ -58,7 +52,13 @@ fn main() {
 }
 
 fn txt_to_toki(text: &str) -> BitVec<u8, Msb0> {
+    let tokens = tokenize(text);
     string_to_bits("default")
+}
+
+fn tokenize(text: &str) -> Vec<&str> {
+    // TODO: This function should seperate out each toki pona word and tokenize them. It should also separate out the stray Unicode characters into two tokens each.
+    Vec::new()
 }
 
 fn toki_to_txt(bits: BitVec<u8, Msb0>) -> String {
